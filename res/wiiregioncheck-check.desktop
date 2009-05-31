@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Actions=WiiCheckRegion;
+Icon=/usr/share/icons/wiiregioncheck48.png
+ServiceTypes=inode/blockdevice,application/x-iso
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+Type=Service
+
+[Desktop Action WiiCheckRegion]
+Name=Check disk region (Wii)
+Name[pl]=Sprawdź region dysku (Wii)
+Exec=wiiregioncheck %F
+Icon=/usr/share/icons/wiiregioncheck48.png

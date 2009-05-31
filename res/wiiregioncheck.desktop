@@ -1,0 +1,13 @@
+[Desktop Entry]
+Exec=wiiregioncheck
+Name=WiiRegionCheck
+Icon=/usr/share/icons/wiiregioncheck48.png
+Type=Application
+Categories=Qt;KDE;Utility
+Comment=Check Wii disk region
+Comment[pl]=Sprawdź region dysku Wii
+GenericName=Check Wii disk region
+GenericName[pl]=Sprawdź region dysku Wii
+Encoding=UTF-8
+Terminal=false
+X-KDE-StartupNotify=false

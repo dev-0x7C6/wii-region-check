@@ -1,0 +1,8 @@
+WiiRegionCheck Changelog
+========================
+
+Version 0.01:
+
+- Integration with common desktop environments. (KDE3/4, GNOME)
+- Integration with konqueror, dolphin.
+- Support for Linux/MacOSX/Windows

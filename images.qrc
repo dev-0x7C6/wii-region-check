@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="newPrefix" >
+    <file>icons/form/cancel.png</file>
+    <file>icons/form/formicon.png</file>
+    <file>icons/form/open.png</file>
+  </qresource>
+</RCC>
