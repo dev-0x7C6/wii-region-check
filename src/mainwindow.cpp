@@ -82,7 +82,7 @@ void MainWindow::slotLoadClicked()
             ui.labelRegion->setText(REGION_EUROPE_MODE);
             break;
         case REGION_USA_CODE:
-            ui.labelRegion->setText(REGION_EUROPE_MODE);
+            ui.labelRegion->setText(REGION_USA_MODE);
             break;
         default:
             ui.labelRegion->setText(REGION_UNKNOWN_REGION);
