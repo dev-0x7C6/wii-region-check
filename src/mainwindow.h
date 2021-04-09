@@ -22,13 +22,16 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QtGui/QMainWindow>
+#include <QMainWindow>
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QString>
 #include <QFile>
 #include <QMessageBox>
 #include <QTextCodec>
+#include <QTimer>
+#include <QSystemTrayIcon>
+#include <QProcess>
 
 class QFileDialog;
 
@@ -41,13 +44,16 @@ public:
     ~MainWindow();
 
 private:
-    QString filename;
+    QSystemTrayIcon tray;
     QFileDialog FileDialog;
+    QTimer timer;
     Ui::MainWindowClass ui;
+    void checkISO(QString filename);
 
 private slots:
     void slotCancelClicked();
     void slotLoadClicked();
+    void slotTimeout();
 };
 
 #endif // MAINWINDOW_H

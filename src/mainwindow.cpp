@@ -30,34 +30,48 @@ const QString REGION_USA_MODE = "NTSC";
 const QString REGION_EUROPE_MODE = "PAL";
 const QString REGION_UNKNOWN_REGION = "UNKNOWN";
 
+const QString DEFAULT_CDROM_DEVICE="/dev/cdrom";
+const quint32 DEFAULT_CHECK_TIMEOUT=1000;
+
+const QString DEFAULT_TEMP_FILENAME="/tmp/block.dat";
+
 MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags)
     : QMainWindow(parent, flags)
 {
+    timer.setInterval(DEFAULT_CHECK_TIMEOUT);
     ui.setupUi(this);
+    setVisible(false);
     connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(slotCancelClicked()));
     connect(ui.actionLoad, SIGNAL(triggered()), this, SLOT(slotLoadClicked()));
+    connect(&timer, SIGNAL(timeout()), this, SLOT(slotTimeout()));
+    tray.setIcon(QIcon(":/icons/icons/wiiregioncheck16.png"));
+    tray.show();
+    //slotTimeout();
+    timer.start();
 }
 
-MainWindow::~MainWindow()
+void MainWindow::slotTimeout()
 {
+    QProcess process;
+    process.start("/bin/dd", QString("if=%1|of=%2|count=1").arg(DEFAULT_CDROM_DEVICE, DEFAULT_TEMP_FILENAME).split('|'));
+    process.waitForFinished(-1);
+    checkISO(DEFAULT_TEMP_FILENAME);
 }
 
-void MainWindow::slotCancelClicked()
+void MainWindow::checkISO(QString filename)
 {
-    close();
-}
-
-void MainWindow::slotLoadClicked()
-{
-    filename = FileDialog.getOpenFileName();
-
-    if (filename.isEmpty())
-        return;
-
     QFile file(filename);
-    if (!file.open(QIODevice::ReadOnly))
+    if (!file.open(QIODevice::ReadWrite))
         return;
+
+    if (file.size() < 512)
+        return;
+
     QDataStream readfile(&file);
+    char id[6];
+    readfile.readRawData(id, 0x06);
+    QString gameId = id;
+    file.seek(0);
     readfile.skipRawData(0x03);
     quint8 region;
     readfile >> region;
@@ -88,11 +102,29 @@ void MainWindow::slotLoadClicked()
             ui.labelRegion->setText(REGION_UNKNOWN_REGION);
     }
 
-
     char title[63];
     readfile.skipRawData(0x04);
     readfile.readRawData(title, 64);
 
     ui.gameTitle->setText(QString("<font color='#0a84f6'><b>%1</b></font>").arg(title));
+    tray.setToolTip(ui.labelRegion->text() + " " + title);
     file.close();
+    tray.showMessage(DEFAULT_CDROM_DEVICE, QString("%1: %3 (%2)").arg(gameId, ui.labelRegion->text(), title), QSystemTrayIcon::Information, 5000);
+}
+
+MainWindow::~MainWindow()
+{
+}
+
+void MainWindow::slotCancelClicked()
+{
+    close();
+}
+
+void MainWindow::slotLoadClicked()
+{
+    QString filename = FileDialog.getOpenFileName();
+
+    if (!filename.isEmpty())
+        checkISO(filename);
 }

@@ -1,7 +1,8 @@
 <RCC>
-    <qresource prefix="/newPrefix" >
+    <qresource prefix="/icons" >
         <file>icons/form/cancel.png</file>
         <file>icons/form/open.png</file>
         <file>icons/wiiregioncheck48.png</file>
+        <file>icons/wiiregioncheck16.png</file>
     </qresource>
 </RCC>
