@@ -35,10 +35,9 @@ const quint32 DEFAULT_CHECK_TIMEOUT=1000;
 
 const QString DEFAULT_TEMP_FILENAME="/tmp/block.dat";
 
-MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags)
-    : QMainWindow(parent, flags)
-{
-    timer.setInterval(DEFAULT_CHECK_TIMEOUT);
+MainWindow::MainWindow(QWidget *parent)
+		: QMainWindow(parent) {
+	timer.setInterval(DEFAULT_CHECK_TIMEOUT);
     ui.setupUi(this);
     setVisible(false);
     connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(slotCancelClicked()));

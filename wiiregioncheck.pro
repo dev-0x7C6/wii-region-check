@@ -3,6 +3,12 @@
 # Project created by QtCreator 2008-11-27T20:13:13
 #
 #-------------------------------------------------
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+CONFIG += c++17
+
 
 TARGET = wiiregioncheck
 TEMPLATE = app
